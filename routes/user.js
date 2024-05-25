@@ -6,8 +6,9 @@ const User = require("../models/user");
 var jwt = require('jsonwebtoken');
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
-
-const secret= process.env.SECRET || 'houseweb3'
+const dotenv = require("dotenv");
+dotenv.config()
+const secret= process.env.SECRET 
 
 /**
  * ********* swagger schema *******
@@ -72,7 +73,7 @@ router.post(
       if (user) {
         return res.status(403).json({
           status: "failed",
-          message: "User already exists ",
+          message: "User already exists",
         });
       }
 
@@ -87,7 +88,7 @@ router.post(
           password: hash,
         });
         res.status(200).json({
-          message: "User registred successfully",
+          message: "User registered successfully",
         });
       });
     } catch (e) {

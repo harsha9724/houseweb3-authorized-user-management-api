@@ -1,6 +1,8 @@
 const { verify } = require('jsonwebtoken');
 const User = require('../models/user');
-const secret = process.env.SECRET || 'houseweb3'
+const dotenv = require("dotenv");
+dotenv.config()
+const secret = process.env.SECRET 
 
 const validateToken = async (req, res, next) => {
 
@@ -30,5 +32,6 @@ const validateToken = async (req, res, next) => {
     res.status(400).json({ message: err?.message });
   }
 };
+
 
 module.exports = { validateToken };

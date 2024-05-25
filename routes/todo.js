@@ -187,7 +187,7 @@ router.put('/todos/:id',validateToken, async (req, res) => {
       });
   
       if (!todo) {
-        return res.status(404).send('Todo not found');
+        return res.status(400).send('Todo not found');
       }
   
       // Update todo
@@ -251,7 +251,7 @@ router.put('/todos/:id',validateToken, async (req, res) => {
       });
   
       if (!todo) {
-        return res.status(404).send('Todo not found');
+        return res.status(400).send('Todo not found');
       }
   
       // Delete todo
