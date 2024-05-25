@@ -6,12 +6,17 @@ const mongoose=require("mongoose");
 const user_routes = require('./routes/user.js');
 const swaggerJSDoc=require("swagger-jsdoc");
 const swaggerUI=require("swagger-ui-express");
+const todo_routes = require('./routes/todo.js')
 
 dotenv.config()
 
 const port = process.env.PORT || 8000
 
-app.use(cors())
+app.use(cors({
+    origin: 'http://localhost:8000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }));
 app.use(express.json());
 
 const options={
@@ -40,7 +45,7 @@ const options={
     security: [{
         bearerAuth: []
     }],
-    apis:["./routes/user.js"]
+    apis:["./routes/user.js","./routes/todo.js"]
 }
 const swaggerSpec=swaggerJSDoc(options);
 app.use("/api-doc",swaggerUI.serve,swaggerUI.setup(swaggerSpec));
@@ -60,6 +65,7 @@ app.get('/',(req,res)=>{
 })
 
 app.use('/api/v1',user_routes)
+app.use('/api/v1',todo_routes)
 
 app.get("*", (req, res) => {
     res.status(404).send("404 PAGE NOT FOUND")
