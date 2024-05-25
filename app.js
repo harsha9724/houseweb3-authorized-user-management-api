@@ -18,7 +18,7 @@ const options={
     definition:{
         openapi:"3.0.0",
         info:{
-            title:"node js todo project",
+            title:"node js user management todo project",
             version:"1.0.0"
         },
         servers:[
