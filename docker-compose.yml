@@ -18,11 +18,8 @@ services:
       - "8000:8000"
     volumes:
       - .:/src/app
-    environment:
-      PORT: 8000
-      MONGO_URL: mongodb://mongo_db:27017
-      TEST_DB_URL: mongodb://mongo_db:2701
-      DB_NAME: user_management
+    env_file:
+      - .env
     depends_on:
       - mongo_db
 
