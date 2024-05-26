@@ -240,7 +240,7 @@ router.delete('/todos/:id', validateToken, async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ message: 'Invalid ID format' });
+      return res.status(400).send({ message: 'Invalid ID format' });
     }
 
     const todo = await Todo.findOne({
@@ -253,7 +253,7 @@ router.delete('/todos/:id', validateToken, async (req, res) => {
     }
 
     await Todo.findByIdAndDelete(id);
-    res.status(200).json({ message: 'Todo deleted successfully' });
+    res.status(200).send({ message: 'Todo deleted successfully' });
   } catch (err) {
     res.status(500).json({ message: 'Internal server error' });
   }
