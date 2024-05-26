@@ -243,14 +243,15 @@ router.delete('/todos/:id', validateToken, async (req, res) => {
       return res.status(400).send({ message: 'Invalid ID format' });
     }
 
-    const todo = await Todo.findOne({
-      _id: id,
-      user_id: req.user, 
-    });
-
-    if (!todo) {
-      return res.status(400).json({ message: 'Todo not found' });
-    }
+      // Check the existence and ownership
+      const todo = await Todo.findOne({
+        _id: id,
+        user_id: req.user, // Assuming req.user holds the user_id
+      });
+  
+      if (!todo) {
+        return res.status(400).send({ message:'Todo not found'});
+      }
 
     await Todo.findByIdAndDelete(id);
     res.status(200).send({ message: 'Todo deleted successfully' });
