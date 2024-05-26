@@ -103,7 +103,7 @@ describe('Todo API', () => {
       const res = await request(app)
         .delete(`/api/v1/todos/${todo._id}`)
         .set('Authorization', `Bearer ${example_token}`);
-      expect(res.status).toBe(200); // Check status first
+      expect(res.statusCode).toBe(200); // Check status first
       expect(res.body.message).toEqual('Todo deleted successfully');
     });
 
@@ -115,7 +115,7 @@ describe('Todo API', () => {
         .delete(`/api/v1/todos/${nonExistingId}`)
         .set('Authorization', `Bearer ${example_token}`);
   
-      expect(res.statusCode).toEqual(400);
+      expect(res.statusCode).tobe(400);
       expect(res.body.message).toEqual('Todo not found');
     });
   
