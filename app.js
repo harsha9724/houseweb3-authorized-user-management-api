@@ -12,11 +12,7 @@ dotenv.config()
 
 const port = process.env.PORT || 8000
 
-app.use(cors({
-    origin: 'http://localhost:8000',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-  }));
+app.use(cors());
 app.use(express.json());
 
 const options={
@@ -50,10 +46,10 @@ const options={
 const swaggerSpec=swaggerJSDoc(options);
 app.use("/api-doc",swaggerUI.serve,swaggerUI.setup(swaggerSpec));
 
-const mongoURL = process.env.NODE_ENV === 'test' ? `${process.env.TEST_DB_URL}/test_user_management` : `${process.env.MONGO_URL}/${process.env.DB_NAME}`;
+const mongoURL = process.env.NODE_ENV === 'test' ? `${process.env.TEST_DB_URL}` : `${process.env.MONGO_URL}`;
 
 mongoose.connect(`${mongoURL}`);
-  
+ 
   const db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', () => {

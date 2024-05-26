@@ -14,16 +14,21 @@ const example_user_id = new mongoose.Types.ObjectId().toString();
 const example_token = jwt.sign({ data: example_user_id }, 'houseweb3', { expiresIn: '1h' });
 
 beforeAll(async () => {
-  // Connect to the in-memory database or a test database
-  await mongoose.connect(`${process.env.TEST_DB_URL}/user_todo_test`);
+  const dbUrl = process.env.TEST_DB_URL;
+
+  if (!dbUrl) {
+    throw new Error("Environment variable TEST_DB_URL is not set");
+  }
+  await mongoose.connect(dbUrl);
 
   // Create a mock user
   await User.create({ _id: example_user_id, email: 'test1@test.com', password: 'password' });
 });
 
 afterAll(async () => {
-  // Clean up database
-  await mongoose.connection.db.dropDatabase();
+  if (mongoose.connection.db) {
+    await mongoose.connection.db.dropDatabase();
+  }
   await mongoose.disconnect();
 });
 

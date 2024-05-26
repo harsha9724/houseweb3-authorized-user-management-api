@@ -11,13 +11,18 @@ app.use(express.json());
 app.use('/api/v1', userRouter);
 
 beforeAll(async () => {
+  const dbUrl = process.env.TEST_DB_URL;
 
-  await mongoose.connect(`${process.env.TEST_DB_URL}/user_todo_test`);
+  if (!dbUrl) {
+    throw new Error("Environment variable TEST_DB_URL is not set");
+  }
+  await mongoose.connect(dbUrl);
 });
 
 afterAll(async () => {
-
-  await mongoose.connection.db.dropDatabase();
+  if (mongoose.connection.db) {
+    await mongoose.connection.db.dropDatabase();
+  }
   await mongoose.disconnect();
 });
 
