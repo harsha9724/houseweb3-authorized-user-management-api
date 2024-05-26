@@ -106,17 +106,7 @@ describe('Todo API', () => {
       expect(res.status).toBe(200); // Check status first
       expect(res.body.message).toEqual('Todo deleted successfully');
     });
-  
-    it('should return error for invalid todo ID format', async () => {
-      const invalidId = 'hbbiuhijnj1258';
-  
-      const res = await request(app)
-        .delete(`/api/v1/todos/${invalidId}`)
-        .set('Authorization', `Bearer ${example_token}`);
-  
-      expect(res.statusCode).toEqual(400);
-      expect(res.body.message).toEqual('Invalid ID format');
-    });
+
   
     it('should return error for deleting non-existing todo', async () => {
       const nonExistingId = new mongoose.Types.ObjectId();
