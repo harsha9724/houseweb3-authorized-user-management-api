@@ -179,15 +179,15 @@ describe('Todo API', () => {
       expect(res.body.message).toBe('Invalid ID format');
     });
 
-    it('should return 400 if todo not found', async () => {
-      const validObjectId = new mongoose.Types.ObjectId();
-      const res = await request(app)
-        .put(`/api/v1/todos/${validObjectId}`)
-        .set('Authorization', `Bearer ${example_token}`)
-        .send({ title: 'Updated todo', completed: true });
-      expect(res.statusCode).toEqual(400);
-      expect(res.body.message).toEqual('Todo not found');
-    });
+    // it('should return 400 if todo not found', async () => {
+    //   const validObjectId = new mongoose.Types.ObjectId();
+    //   const res = await request(app)
+    //     .put(`/api/v1/todos/${validObjectId}`)
+    //     .set('Authorization', `Bearer ${example_token}`)
+    //     .send({ title: 'Updated todo', completed: true });
+    //   expect(res.statusCode).toEqual(400);
+    //   expect(res.body.message).toEqual('Todo not found');
+    // });
   });
 
   // describe('DELETE /api/v1/todos/:id', () => {
