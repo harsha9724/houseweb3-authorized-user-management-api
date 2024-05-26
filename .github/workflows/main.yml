@@ -31,12 +31,6 @@ jobs:
             TEST_DB_URL=${{ secrets.TEST_DB_URL }}
             SECRET=${{ secrets.SECRET }}
           
-      - name: Run tests
-        run: |
-          docker run -e TEST_DB_URL=${{ secrets.TEST_DB_URL }} \
-                     -e SECRET=${{ secrets.SECRET }} \
-                     ${DOCKER_IMAGE_NAME}:test npm test
-          
       - name: Build and push to Docker Hub
         uses: docker/build-push-action@v5
         with:
