@@ -97,15 +97,14 @@ describe('Todo API', () => {
     });
   
   
-    it('should return error for deleting non-existing todo', async () => {
-      const nonExistingId = new mongoose.Types.ObjectId();
-  
+    it('should delete a todo', async () => {
+      const todo = await Todo.create({ title: 'Test Todo', user_id: example_user_id });
+    
       const res = await request(app)
-        .delete(`/api/v1/todos/${nonExistingId}`)
+        .delete(`/api/v1/todos/${todo._id}`)
         .set('Authorization', `Bearer ${example_token}`);
-  
-      expect(res.statusCode).toEqual(400);
-      expect(res.body.message).toEqual('Todo not found');
+      expect(res.status).toBe(200); // Check status first
+      expect(res.body.message).toEqual('Todo deleted successfully');
     });
   
     it('should return error for invalid todo ID format', async () => {
@@ -130,13 +129,4 @@ describe('Todo API', () => {
       expect(res.body.message).toEqual('Todo not found');
     });
   
-    it('should delete a todo', async () => {
-      const todo = await Todo.create({ title: 'Test Todo', user_id: example_user_id });
-    
-      const res = await request(app)
-        .delete(`/api/v1/todos/${todo._id}`)
-        .set('Authorization', `Bearer ${example_token}`);
-      expect(res.status).toBe(200); // Check status first
-      expect(res.body.message).toEqual('Todo deleted successfully');
-    });
   });
