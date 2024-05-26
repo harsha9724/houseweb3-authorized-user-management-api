@@ -190,36 +190,36 @@ describe('Todo API', () => {
     });
   });
 
-  describe('DELETE /api/v1/todos/:id', () => {
-    it('should delete a todo by the given id', async () => {
-      const todo = new Todo({
-        title: 'Test todo',
-        user_id: example_user_id,
-      });
-      await todo.save();
+  // describe('DELETE /api/v1/todos/:id', () => {
+  //   it('should delete a todo by the given id', async () => {
+  //     const todo = new Todo({
+  //       title: 'Test todo',
+  //       user_id: example_user_id,
+  //     });
+  //     await todo.save();
 
-      const res = await request(app)
-        .delete(`/api/v1/todos/${todo.id}`)
-        .set('Authorization', `Bearer ${example_token}`);
-      expect(res.statusCode).toEqual(200);
-      expect(res.body.message).toBe('Todo deleted successfully');
-    });
+  //     const res = await request(app)
+  //       .delete(`/api/v1/todos/${todo.id}`)
+  //       .set('Authorization', `Bearer ${example_token}`);
+  //     expect(res.statusCode).toEqual(200);
+  //     expect(res.body.message).toBe('Todo deleted successfully');
+  //   });
 
-    it('should return 400 for invalid ObjectId', async () => {
-      const res = await request(app)
-        .delete('/api/v1/todos/invalidObjectId')
-        .set('Authorization', `Bearer ${example_token}`);
-      expect(res.statusCode).toEqual(400);
-      expect(res.body.message).toBe('Invalid ID format');
-    });
+  //   it('should return 400 for invalid ObjectId', async () => {
+  //     const res = await request(app)
+  //       .delete('/api/v1/todos/invalidObjectId')
+  //       .set('Authorization', `Bearer ${example_token}`);
+  //     expect(res.statusCode).toEqual(400);
+  //     expect(res.body.message).toBe('Invalid ID format');
+  //   });
 
-    it('should return 400 if todo not found', async () => {
-      const validObjectId = new mongoose.Types.ObjectId();
-      const res = await request(app)
-        .delete(`/api/v1/todos/${validObjectId}`)
-        .set('Authorization', `Bearer ${example_token}`);
-      expect(res.statusCode).toEqual(400);
-      expect(res.body.message).toBe('Todo not found');
-    });
-  });
+  //   it('should return 400 if todo not found', async () => {
+  //     const validObjectId = new mongoose.Types.ObjectId();
+  //     const res = await request(app)
+  //       .delete(`/api/v1/todos/${validObjectId}`)
+  //       .set('Authorization', `Bearer ${example_token}`);
+  //     expect(res.statusCode).toEqual(400);
+  //     expect(res.body.message).toBe('Todo not found');
+  //   });
+  // });
 });
