@@ -132,10 +132,11 @@ describe('Todo API', () => {
   
     it('should delete a todo', async () => {
       const todo = await Todo.create({ title: 'Test Todo', user_id: example_user_id });
-  
+    
       const res = await request(app)
         .delete(`/api/v1/todos/${todo._id}`)
         .set('Authorization', `Bearer ${example_token}`);
+      expect(res.status).toBe(200); // Check status first
       expect(res.body.message).toEqual('Todo deleted successfully');
     });
   });
