@@ -9,6 +9,8 @@ COPY . .
 FROM base AS test
 ARG TEST_DB_URL
 ENV TEST_DB_URL=$TEST_DB_URL
+ARG SECRET
+ENV SECRET=$SECRET
 RUN echo "TEST_DB_URL: $TEST_DB_URL" # For debugging
 RUN npm test
 
