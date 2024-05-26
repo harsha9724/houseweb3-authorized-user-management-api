@@ -7,7 +7,7 @@ const user_routes = require('./routes/user.js');
 const swaggerJSDoc=require("swagger-jsdoc");
 const swaggerUI=require("swagger-ui-express");
 const todo_routes = require('./routes/todo.js')
-
+const API_URL = 'https://houseweb3-authorized-user-management-api.onrender.com'
 dotenv.config()
 
 const port = process.env.PORT || 8000
@@ -24,7 +24,7 @@ const options={
         },
         servers:[
             {
-                url:`http://localhost:${port}`
+                url:API_URL
             }
         ]
     },
