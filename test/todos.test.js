@@ -186,7 +186,7 @@ describe('Todo API', () => {
         .set('Authorization', `Bearer ${example_token}`)
         .send({ title: 'Updated todo', completed: true });
       expect(res.statusCode).toEqual(400);
-      expect(res.body.message).toBe('Todo not found');
+      expect(res.body.message).toEqual('Todo not found');
     });
   });
 
