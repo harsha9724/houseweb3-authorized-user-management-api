@@ -22,7 +22,7 @@ const validateToken = async (req, res, next) => {
       }
       const data = await User.findOne({ _id: decode.data });
       if (data) {
-        req.user = data._id;
+        req.user = decode.data;
         next();
       } else {
         res.status(400).json({ message: "User not found" });
