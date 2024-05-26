@@ -111,7 +111,7 @@ router.get('/todos', validateToken, async (req, res) => {
 
 router.post('/todos',validateToken, async (req, res) => {
     if(!req.body.title){
-        res.status(400).send("Title is required");
+        res.status(400).send( {message:"Title is required"});
         return
     }
     const todo = new Todo({
@@ -177,7 +177,7 @@ router.put('/todos/:id',validateToken, async (req, res) => {
       const { id } = req.params;
   
       if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).send('Invalid ID format');
+        return res.status(400).send({ message:'Invalid ID format'});
       }
   
       // Check the existence and ownership
@@ -187,7 +187,7 @@ router.put('/todos/:id',validateToken, async (req, res) => {
       });
   
       if (!todo) {
-        return res.status(400).send('Todo not found');
+        return res.status(400).send({ message:'Todo not found'});
       }
   
       // Update todo
@@ -235,33 +235,30 @@ router.put('/todos/:id',validateToken, async (req, res) => {
  */
 
   
-  router.delete('/todos/:id',validateToken, async (req, res) => {
-    try {
-      // Check the valid format of id
-      const { id } = req.params;
-  
-      if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).send('Invalid ID format');
-      }
-  
-      // Check the existence and ownership
-      const todo = await Todo.findOne({
-        _id: id,
-        user_id: req.user, 
-      });
-  
-      if (!todo) {
-        return res.status(400).send('Todo not found');
-      }
-  
-      // Delete todo
-      const delete_todo = await Todo.findByIdAndDelete(req.params.id);
-  
-      res.status(200).send('Todo deleted successfully');
-    } catch (err) {
-      res.status(400).send(err.message);
+router.delete('/todos/:id', validateToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: 'Invalid ID format' });
     }
-  });
+
+    const todo = await Todo.findOne({
+      _id: id,
+      user_id: req.user._id, 
+    });
+
+    if (!todo) {
+      return res.status(400).json({ message: 'Todo not found' });
+    }
+
+    await Todo.findByIdAndDelete(id);
+    res.status(200).json({ message: 'Todo deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
   
 
 
