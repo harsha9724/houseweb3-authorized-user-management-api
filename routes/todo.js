@@ -245,7 +245,7 @@ router.delete('/todos/:id', validateToken, async (req, res) => {
 
     const todo = await Todo.findOne({
       _id: id,
-      user_id: req.user._id, 
+      user_id: req.user, 
     });
 
     if (!todo) {
